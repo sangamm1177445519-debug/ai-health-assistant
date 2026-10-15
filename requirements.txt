@@ -1,0 +1,8 @@
+streamlit>=1.40
+pandas
+numpy
+plotly
+requests
+python-dotenv
+reportlab
+matplotlib

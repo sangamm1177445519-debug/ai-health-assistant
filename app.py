@@ -367,6 +367,12 @@ def lay(fig, h=320):
     fig.update_layout(height=h, margin=dict(l=10, r=10, t=30, b=10), paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Inter", color="#0b2a6f")); return fig
 def alert_text(d): return f"{d['label']} is {abs(d['pct']):.0f}% {'below' if d['pct'] < 0 else 'above'} your 7-day personal baseline."
 
+@st.cache_data(show_spinner=False)
+def bg_video_src():
+    import base64
+    with open(os.path.join(BASE, "static", "bg.mp4"), "rb") as f:
+        return "data:video/mp4;base64," + base64.b64encode(f.read()).decode()
+
 def hero_html():
     import re
     h = open(os.path.join(BASE, "hero", "index.html"), encoding="utf-8").read(); css = open(os.path.join(BASE, "hero", "style.css"), encoding="utf-8").read()
@@ -376,6 +382,7 @@ def hero_html():
                  ("Best digital banking card 2026", "Personal-history-first student health"), ("One Card, Zero<br>Limits. Worldwide.", "Understand Your Routine.<br>Understand What Changed."),
                  ("Neuromorphic", "Baseline"), ("AGI", "Drift"), ("Cybernetics", "Decisions")]:
         h = h.replace(a, b)
+    h = h.replace("/app/static/bg.mp4", bg_video_src())  # sabse last me, taaki upar ke text-replace base64 ko na bigaden
     return h
 
 # ---------------- pages ----------------
